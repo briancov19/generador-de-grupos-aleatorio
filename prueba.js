@@ -1,4 +1,5 @@
 
+
 let DesorganizarIntegrantes = [],
    integrante;
 
@@ -23,12 +24,13 @@ document.addEventListener("keydown",e => {
 });
 
 
-
+let err = false;
 document.addEventListener("click", (e) =>{
     let repeticion;
     if(e.target.matches(".crear")){
        /******Validación form*******/ 
        if(document.querySelector(".repeticion").value > DesorganizarIntegrantes.length){
+        err = true;
         document.querySelector(".repeticion").classList.add("borderErr");
         document.querySelector(".participantes-ingresados").classList.add("error");
        }else{
@@ -200,7 +202,7 @@ document.addEventListener("click",e=>{
 
 document.addEventListener("click",e=>{
     setTimeout(()=>{
-        if(e.target.matches(".crear")&&document.getElementById("insercion_listas").childNodes.length <= 0) {
+        if(e.target.matches(".crear")&& err == true) {
             let $p = document.createElement("p");
             $p.textContent = "Se deben de llenar todos los campos correctamente."
             $p.setAttribute("style","color:red; font-size:20px;")
@@ -208,7 +210,10 @@ document.addEventListener("click",e=>{
             setTimeout(()=> {
                 document.querySelector(".content-form").removeChild($p);
             },3000)
+            document.getElementById("insercion_listas").setAttribute("style","display:none;")
+            err=false;
         }          
     },3000);
 });
+ 
  
